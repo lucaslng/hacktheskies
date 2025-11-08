@@ -1,10 +1,10 @@
 {
-  "name": "Placeholder",
-  "description": "Placeholder",
-  "version": "1.0",
-  "manifest_version": 3,
+	"name": "Placeholder",
+	"description": "Placeholder",
+	"version": "1.0",
+	"manifest_version": 3,
 	"permissions": ["activeTab", "scripting"],
 	"background": {
-    "service_worker": "background.js"
-  }
+		"service_worker": "background.js"
+	}
 }
