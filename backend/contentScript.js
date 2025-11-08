@@ -1,16 +1,22 @@
+function extractTitle() {
+  const selectors = ["h1", '[class*="title"]', '[class*="headline"]'];
+  for (const sel of selectors) {
+    const el = document.querySelector(sel);
+    if (el?.textContent?.trim()) return el.textContent.trim();
+  }
+  return document.title;
+}
+
 function scrapeNewsArticle() {
-  const title =
-    document.querySelector('h1')?.textContent?.trim() ||
-    document.querySelector('[class*="title"]')?.textContent?.trim() ||
-    document.querySelector('[class*="headline"]')?.textContent?.trim() ||
-    document.title;
+  const title = extractTitle();
 
   const container =
-    document.querySelector('article, [class*="article-body"], [class*="post-content"], main') ||
-    document.body;
+    document.querySelector(
+      'article, [class*="article-body"], [class*="post-content"], main'
+    ) || document.body;
 
-  const paragraphs = Array.from(container.querySelectorAll('p'))
-    .map(p => p.textContent.trim())
+  const paragraphs = Array.from(container.querySelectorAll("p"))
+    .map((p) => p.textContent.trim())
     .filter(Boolean);
 
   return {
@@ -18,17 +24,16 @@ function scrapeNewsArticle() {
     title,
     paragraphs,
     scrapedAt: new Date().toISOString(),
-    domain: window.location.hostname
+    domain: window.location.hostname,
   };
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === 'extractArticle') {
+  if (request.action === "extractArticle") {
     const article = scrapeNewsArticle();
     sendResponse({
       ...article,
-      text: article.paragraphs.join('\n\n')
+      text: article.paragraphs.join("\n\n"),
     });
-    return true;
   }
 });
