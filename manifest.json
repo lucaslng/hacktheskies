@@ -1,13 +1,14 @@
 {
-  "name": "Placeholder",
-  "description": "Placeholder side panel demo",
+  "name": "News Article Scraper",
+  "description": "Scrape content from news articles",
   "version": "1.0",
   "manifest_version": 3,
   "background": {
     "service_worker": "chrome/background.js"
   },
-  "permissions": ["sidePanel", "activeTab", "scripting"],
+  "permissions": ["sidePanel", "activeTab", "scripting", "tabs"],
   "host_permissions": ["<all_urls>"],
+  "action": {},
   "content_scripts": [
     {
       "matches": ["<all_urls>"],

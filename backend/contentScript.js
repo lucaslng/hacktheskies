@@ -1,14 +1,3 @@
-document.getElementById('scrapeBtn').addEventListener('click', async () => {
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  const [{ result }] = await chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    function: scrapeNewsArticle
-  });
-
-  document.getElementById('output').textContent = JSON.stringify(result, null, 2);
-  window.scrapedData = result;
-});
-
 function scrapeNewsArticle() {
   const title =
     document.querySelector('h1')?.textContent?.trim() ||
@@ -32,3 +21,14 @@ function scrapeNewsArticle() {
     domain: window.location.hostname
   };
 }
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === 'extractArticle') {
+    const article = scrapeNewsArticle();
+    sendResponse({
+      ...article,
+      text: article.paragraphs.join('\n\n')
+    });
+    return true;
+  }
+});
