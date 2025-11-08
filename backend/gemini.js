@@ -7,12 +7,10 @@ const ai = new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY
 })
 
-async function main(){
+async function gemini(contents) {
     const response = await ai.models.generateContent({
         model: "gemini-2.5-flash",
-        contents: "Explain how I can prompt AI to make a news article neutral"
-    })
-    console.log(response.text);
+        contents: contents
+    });
+    return response.text;
 }
-
-// main();

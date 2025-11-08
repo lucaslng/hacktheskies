@@ -4,17 +4,17 @@
   "version": "1.0",
   "manifest_version": 3,
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "chrome/background.js"
   },
   "permissions": ["sidePanel", "activeTab", "scripting"],
   "host_permissions": ["<all_urls>"],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["contentScript.js"]
+      "js": ["backend/contentScript.js"]
     }
   ],
   "side_panel": {
-    "default_path": "sidepanel.html"
+    "default_path": "ui/sidepanel.html"
   }
 }
