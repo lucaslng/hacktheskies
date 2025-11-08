@@ -8,7 +8,13 @@
   },
   "permissions": ["sidePanel", "activeTab", "scripting", "tabs"],
   "host_permissions": ["<all_urls>"],
-  "action": {},
+  "action": {
+    "default_icon": {
+      "16": "assets/icons/icon16.",
+      "24": "assets/icons/icon24.",
+      "32": "assets/icons/icon32."
+    }
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
