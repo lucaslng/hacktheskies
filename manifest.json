@@ -6,7 +6,7 @@
   "background": {
     "service_worker": "chrome/background.js"
   },
-  "permissions": ["sidePanel", "activeTab", "scripting", "tabs"],
+  "permissions": ["sidePanel", "activeTab", "scripting", "tabs", "storage"],
   "host_permissions": ["<all_urls>"],
   "action": {
     "default_icon": {
@@ -18,7 +18,17 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["backend/contentScript.js"]
+      "js": [
+        "backend/prompts.js",
+        "backend/gemini.js",
+        "backend/contentScript.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [".env"],
+      "matches": ["<all_urls>"]
     }
   ],
   "side_panel": {
