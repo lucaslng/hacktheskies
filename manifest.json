@@ -1,6 +1,6 @@
 {
-  "name": "News Article Scraper",
-  "description": "Scrape content from news articles",
+  "name": "Article Neutralizer",
+  "description": "Who, what, when, where, why. Get the facts, not the bias.",
   "version": "1.0",
   "manifest_version": 3,
   "background": {
