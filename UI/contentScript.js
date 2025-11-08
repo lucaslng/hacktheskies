@@ -1,20 +1,34 @@
-console.log("Content script active on:", window.location.href);
+document.getElementById('scrapeBtn').addEventListener('click', async () => {
+  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  const [{ result }] = await chrome.scripting.executeScript({
+    target: { tabId: tab.id },
+    function: scrapeNewsArticle
+  });
 
-chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-  if (msg.action === "extractArticle") {
-    const text = extractMainText();
-    sendResponse({ text });
-  }
+  document.getElementById('output').textContent = JSON.stringify(result, null, 2);
+  window.scrapedData = result;
 });
 
-function extractMainText() {
-  const article = document.querySelector("article");
-  if (article) return article.innerText.trim();
+function scrapeNewsArticle() {
+  const title =
+    document.querySelector('h1')?.textContent?.trim() ||
+    document.querySelector('[class*="title"]')?.textContent?.trim() ||
+    document.querySelector('[class*="headline"]')?.textContent?.trim() ||
+    document.title;
 
-  // fallback: combine all <p> tags
-  const paragraphs = Array.from(document.querySelectorAll("p"))
-    .map(p => p.innerText.trim())
-    .filter(p => p.length > 50);
+  const container =
+    document.querySelector('article, [class*="article-body"], [class*="post-content"], main') ||
+    document.body;
 
-  return paragraphs.join("\n\n") || "No readable content found.";
+  const paragraphs = Array.from(container.querySelectorAll('p'))
+    .map(p => p.textContent.trim())
+    .filter(Boolean);
+
+  return {
+    url: window.location.href,
+    title,
+    paragraphs,
+    scrapedAt: new Date().toISOString(),
+    domain: window.location.hostname
+  };
 }
