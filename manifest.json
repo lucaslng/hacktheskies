@@ -10,9 +10,9 @@
   "host_permissions": ["<all_urls>"],
   "action": {
     "default_icon": {
-      "16": "assets/icons/icon16.",
-      "24": "assets/icons/icon24.",
-      "32": "assets/icons/icon32."
+      "16": "assets/icons/icon16.png",
+      "24": "assets/icons/icon24.png",
+      "32": "assets/icons/icon32.png"
     }
   },
   "content_scripts": [
