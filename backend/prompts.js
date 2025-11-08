@@ -1,4 +1,5 @@
-window.SUMMARIZE_PROMPT = `Goal:
+window.SUMMARIZE_PROMPT = 
+`Goal:
 
 Summarize webpage content clearly and concisely.
 
